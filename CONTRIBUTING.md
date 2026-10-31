@@ -23,6 +23,19 @@ pnpm tsc --noEmit
 cd src-tauri && cargo test && cargo clippy --all-targets -- -D warnings
 ```
 
+## The website
+
+The landing page is in `site/`, built with Astro. English is at `/` and Indonesian at `/id/`, and both read their text from `site/src/content.ts`.
+
+```bash
+cd site
+pnpm install
+pnpm dev      # local preview
+pnpm build    # must pass before a pull request
+```
+
+Keep the page true to the README: no invented numbers, no real project names in screenshots, and no third-party requests (no analytics, no external fonts). The site URL is set once, in `site/astro.config.mjs`.
+
 ## Rules that keep the project what it is
 
 - **No network, no telemetry.** Pantau makes no network requests and the webview's CSP allows none. Don't add a dependency or a feature that changes that.

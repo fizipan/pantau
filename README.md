@@ -9,6 +9,7 @@
 </p>
 
 <p align="center">
+  <a href="https://pantau-app.vercel.app"><img alt="Website" src="https://img.shields.io/badge/website-pantau--app.vercel.app-black"></a>
   <a href="https://github.com/fizipan/pantau/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/fizipan/pantau"></a>
   <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-blue"></a>
   <img alt="macOS, Apple Silicon" src="https://img.shields.io/badge/macOS-Apple%20Silicon-lightgrey">
@@ -136,7 +137,7 @@ Three cargo features, all off by default:
 - `notify-test` sends one low-disk notification 5 seconds after start, to try the banner and its click.
 - `tick-log` writes the largest gap between system samples once a minute, to check the 10-second limit on memory pressure notifications.
 
-Built with Tauri 2, Rust, React, TypeScript and Tailwind CSS. The design notes are in [docs/design/DESIGN.md](docs/design/DESIGN.md). See [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request, and [SECURITY.md](SECURITY.md) to report a vulnerability.
+Built with Tauri 2, Rust, React, TypeScript and Tailwind CSS. The website is in `site/`, built with Astro, GSAP and Lenis. Run it with `cd site && pnpm install && pnpm dev`. The design notes are in [docs/design/DESIGN.md](docs/design/DESIGN.md). See [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request, and [SECURITY.md](SECURITY.md) to report a vulnerability.
 
 ## License
 

@@ -9,6 +9,7 @@
 </p>
 
 <p align="center">
+  <a href="https://pantau-app.vercel.app"><img alt="Situs" src="https://img.shields.io/badge/situs-pantau--app.vercel.app-black"></a>
   <a href="https://github.com/fizipan/pantau/releases/latest"><img alt="Rilis terbaru" src="https://img.shields.io/github/v/release/fizipan/pantau"></a>
   <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-blue"></a>
   <img alt="macOS, Apple Silicon" src="https://img.shields.io/badge/macOS-Apple%20Silicon-lightgrey">
@@ -137,7 +138,7 @@ Tiga fitur cargo, semuanya mati secara bawaan:
 - `notify-test`: mengirim satu notifikasi disk rendah 5 detik setelah start, untuk mencoba banner dan kliknya.
 - `tick-log`: menulis jeda terbesar antar-sampel sistem sekali semenit, untuk memeriksa batas 10 detik pada notifikasi tekanan memori.
 
-Dibangun dengan Tauri 2, Rust, React, TypeScript, dan Tailwind CSS. Catatan desainnya ada di [docs/design/DESIGN.md](docs/design/DESIGN.md). Baca [CONTRIBUTING.md](CONTRIBUTING.md) sebelum membuka pull request, dan [SECURITY.md](SECURITY.md) untuk melaporkan celah keamanan.
+Dibangun dengan Tauri 2, Rust, React, TypeScript, dan Tailwind CSS. Situsnya ada di `site/`, dibuat dengan Astro, GSAP, dan Lenis. Jalankan dengan `cd site && pnpm install && pnpm dev`. Catatan desainnya ada di [docs/design/DESIGN.md](docs/design/DESIGN.md). Baca [CONTRIBUTING.md](CONTRIBUTING.md) sebelum membuka pull request, dan [SECURITY.md](SECURITY.md) untuk melaporkan celah keamanan.
 
 ## Lisensi
 

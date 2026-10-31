@@ -1,0 +1,300 @@
+---
+import "lenis/dist/lenis.css";
+import "../styles/site.css";
+import { STRINGS } from "../content";
+
+const { lang } = Astro.props as { lang: "en" | "id" };
+const t = STRINGS[lang];
+const REPO = "https://github.com/fizipan/pantau";
+const BREW = t.inst.cmd;
+const abs = (p: string) => new URL(p, Astro.site).href;
+
+// Gauge geometry: the icon's 270 degree dial, drawn large. Angles run clockwise on screen from 3 o'clock.
+const C = 300, R = 236;
+const pt = (deg: number, r = R) => [C + r * Math.cos((deg * Math.PI) / 180), C + r * Math.sin((deg * Math.PI) / 180)].map((n) => n.toFixed(2));
+const arc = (a: number, b: number, r = R) => {
+  const [x1, y1] = pt(a, r), [x2, y2] = pt(b, r);
+  return `M${x1} ${y1}A${r} ${r} 0 ${b - a > 180 ? 1 : 0} 1 ${x2} ${y2}`;
+};
+const ticks = Array.from({ length: 28 }, (_, i) => {
+  const d = 135 + (270 * i) / 27;
+  return { a: pt(d, 188), b: pt(d, i % 3 === 0 ? 168 : 176), major: i % 3 === 0 };
+});
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Pantau",
+  description: t.description,
+  url: abs(t.self),
+  image: abs(t.ogImage),
+  inLanguage: t.htmlLang,
+  applicationCategory: "UtilitiesApplication",
+  operatingSystem: "macOS",
+  softwareRequirements: "Apple Silicon Mac, Homebrew",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  license: `${REPO}/blob/main/LICENSE`,
+  downloadUrl: `${REPO}/releases/latest`,
+  codeRepository: REPO,
+  author: { "@type": "Person", name: "fizipan", url: "https://github.com/fizipan" },
+};
+const strings = { copy: t.copy, copied: t.copied, locale: lang === "id" ? "id-ID" : "en-US" };
+const lastShot = t.shots.length - 1;
+---
+
+<!doctype html>
+<html lang={t.htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{t.title}</title>
+    <meta name="description" content={t.description} />
+    <meta name="author" content="fizipan" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f5f6f9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f1115" media="(prefers-color-scheme: dark)" />
+    <meta property="og:site_name" content="Pantau" />
+    <meta property="og:title" content={t.title} />
+    <meta property="og:locale" content={t.ogLocale} />
+    <meta property="og:locale:alternate" content={t.ogLocaleAlt} />
+    <meta property="og:description" content={t.ogDescription} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={abs(t.self)} />
+    <meta property="og:image" content={abs(t.ogImage)} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={t.ogAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={t.title} />
+    <meta name="twitter:description" content={t.ogDescription} />
+    <meta name="twitter:image" content={abs(t.ogImage)} />
+    <meta name="twitter:image:alt" content={t.ogAlt} />
+    <link rel="canonical" href={abs(t.self)} />
+    <link rel="alternate" hreflang="en" href={abs("/")} />
+    <link rel="alternate" hreflang="id" href={abs("/id/")} />
+    <link rel="alternate" hreflang="x-default" href={abs("/")} />
+    <link rel="sitemap" href="/sitemap.xml" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate icon" href="/assets/icon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+    <link rel="preload" href={`/assets/${t.shots[0].tab}.jpg`} as="image" fetchpriority="high" />
+    <link rel="preload" href="/assets/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/hanken.woff2" as="font" type="font/woff2" crossorigin />
+    <script is:inline>
+      // Runs before first paint, so the language never flashes and motion state is known.
+      (() => {
+        const h = document.documentElement;
+        if (!matchMedia("(prefers-reduced-motion: reduce)").matches) h.classList.add("motion");
+        try {
+          const saved = localStorage.getItem("pt-lang");
+          if (location.pathname === "/" && (saved === "id" || (!saved && (navigator.language || "").toLowerCase().startsWith("id")))) location.replace("/id/");
+        } catch {}
+      })();
+    </script>
+  </head>
+  <body data-strings={JSON.stringify(strings)}>
+    <a class="skip" href="#main">{t.skip}</a>
+
+    <header class="bar">
+      <nav class="bar-in" aria-label={t.mainNav}>
+        <a class="brand" href="#top"><img src="/assets/icon.png" width="28" height="28" alt="" />Pantau</a>
+        <button class="menu-btn" id="menu" type="button" aria-expanded="false" aria-controls="navs">{t.menu}</button>
+        <div class="navs" id="navs">
+          <a href="#heavy">{t.nav.heavy}</a>
+          <a href="#disk">{t.nav.disk}</a>
+          <a href="#privacy">{t.nav.privacy}</a>
+          <a href="#install">{t.nav.install}</a>
+        </div>
+        <div class="bar-right">
+          <a class="lang" id="lang" href={t.other} hreflang={lang === "en" ? "id" : "en"} data-lang={lang === "en" ? "id" : "en"} aria-label={t.otherAria}>{t.otherLabel}</a>
+          <a class="gh" href={REPO} aria-label={t.repoLabel}>
+            <svg aria-hidden="true" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.34c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.72 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.13 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.11.16 1.93.08 2.13.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"></path></svg>
+            <span>GitHub</span>
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero-wrap" id="top"><div class="hero">
+        <div class="hero-text">
+          <h1 id="headline"><span class="ln"><span>{t.h1[0]}</span></span><span class="ln"><span class="then">{t.h1[1]}</span></span></h1>
+          <p class="lede" data-in>{t.lede}</p>
+          <div class="acts" data-in>
+            <div class="cmd"><code id="heroCmd">{BREW}</code><button class="copy" type="button" data-copy="#heroCmd" aria-label={t.copyLabel}>{t.copy}</button></div>
+            <a class="link" href={REPO}>{t.gh}</a>
+          </div>
+          <aside class="early" aria-labelledby="earlyH" data-in>
+            <p class="early-h" id="earlyH">{t.earlyH}</p>
+            <p>{t.early} <a href="#install-early">{t.earlyMore}</a></p>
+          </aside>
+          <ul class="chips" data-in>{t.chips.map((c) => <li>{c}</li>)}</ul>
+        </div>
+
+        <div class="hero-stage">
+          <svg class="gauge" id="gauge" viewBox="0 0 600 600" aria-hidden="true">
+            <path class="g-track" d={arc(135, 405)} pathLength="1" />
+            <g class="g-ticks">{ticks.map((k) => <line class:list={{ major: k.major }} x1={k.a[0]} y1={k.a[1]} x2={k.b[0]} y2={k.b[1]} />)}</g>
+            <path class="g-blue" d={arc(135, 318)} pathLength="1" />
+            <path class="g-amber" d={arc(346, 405)} pathLength="1" />
+            <circle class="g-dot" cx={C} cy={C} r="13" />
+          </svg>
+          <div class="pop-col">
+            <figure class="pop" id="pop">
+              <div class="pop-img" role="tabpanel" id="panel" aria-live="polite">
+                {t.shots.map((s, i) => (
+                  <img class:list={["shot", { on: i === 0 }]} data-tab={s.tab} data-cap={s.cap} data-alt={s.alt} src={`/assets/${s.tab}.jpg`} width="760" height="1200" alt={i === 0 ? s.alt : ""} decoding="async" loading={i === 0 ? "eager" : "lazy"} />
+                ))}
+                <span class="tag">{t.exampleData}</span>
+              </div>
+              <figcaption id="cap">{t.shots[0].cap}</figcaption>
+            </figure>
+            <div class="tabs" role="tablist" aria-label={t.shotsLabel}>
+              {t.shots.map((s, i) => <button type="button" role="tab" data-tab={s.tab} aria-selected={i === 0 ? "true" : "false"} aria-controls="panel" tabindex={i === 0 ? 0 : -1}>{s.label}</button>)}
+            </div>
+            <p class="tab-hint">{t.exampleNote} {t.tabHint}</p>
+          </div>
+        </div>
+      </div></section>
+
+      <section class="sec heavy" id="heavy">
+        <div class="sec-in two">
+          <div class="col-text">
+            <h2 data-title>{t.heavy.h}</h2>
+            <p class="sub rise">{t.heavy.sub}</p>
+            <dl class="facts rise">
+              {t.heavy.facts.map(([a, b]) => <div><dt>{a}</dt><dd>{b}</dd></div>)}
+            </dl>
+          </div>
+          <figure class="fig rise">
+            <div class="fig-img"><img src="/assets/proses-konfirmasi.jpg" width="760" height="1200" loading="lazy" decoding="async" alt={t.heavy.shotAlt} /><span class="tag">{t.exampleData}</span></div>
+          </figure>
+        </div>
+        <div class="sec-in">
+          <div class="ladder-head">
+            <h3>{t.heavy.ladderH}</h3>
+            <p class="sub">{t.heavy.ladderSub}</p>
+          </div>
+          <ol class="ladder" id="ladder">
+            {t.heavy.ladder.map(([a, b], i) => (
+              <li style={`--i:${i}`}>
+                <span class:list={["step", { kill: i === 0 || i === 3, ask: i === 1 }]}>{a}</span>
+                <p>{b}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section class="sec disk band" id="disk">
+        <div class="sec-in two flip">
+          <figure class="fig rise">
+            <div class="fig-img"><img src="/assets/penyimpanan-light.jpg" width="760" height="1200" loading="lazy" decoding="async" alt={t.disk.shotAlt} /><span class="tag">{t.exampleData}</span></div>
+          </figure>
+          <div class="col-text">
+            <h2 data-title>{t.disk.h}</h2>
+            <p class="sub rise">{t.disk.sub}</p>
+            <div class="lists rise">
+              <div>
+                <h3>{t.disk.safeH}</h3>
+                <p class="list-note">{t.disk.safeNote}</p>
+                <ul class="clean">{t.disk.safe.map(([a, b]) => <li><b>{a}</b><span>{b}</span></li>)}</ul>
+              </div>
+              <div>
+                <h3>{t.disk.checkH}</h3>
+                <p class="list-note">{t.disk.checkNote}</p>
+                <ul class="clean look">{t.disk.check.map(([a, b]) => <li><b>{a}</b><span>{b}</span></li>)}</ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sec-in">
+          <div class="never rise">
+            <p class="never-h">{t.disk.neverH}</p>
+            <p>{t.disk.never}</p>
+          </div>
+          <div class="notes rise">
+            <div><h3>{t.disk.afterH}</h3><p>{t.disk.after}</p></div>
+            <div><h3>{t.disk.findH}</h3><p>{t.disk.find}</p></div>
+            <div><h3>{t.disk.scanH}</h3><p>{t.disk.scan}</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec also">
+        <div class="sec-in also-in">
+          <h2 data-title>{t.also.h}</h2>
+          <ul class="rows rise">{t.also.items.map(([a, b]) => <li><b>{a}</b><span>{b}</span></li>)}</ul>
+        </div>
+      </section>
+
+      <section class="sec privacy" id="privacy">
+        <div class="sec-in">
+          <h2 class="priv-h" data-title>{t.priv.h}</h2>
+          <p class="sub rise">{t.priv.sub}</p>
+          <ul class="pts rise">{t.priv.points.map(([a, b]) => <li><h3>{a}</h3><p>{b}</p></li>)}</ul>
+          <p class="site-note rise">{t.priv.site}</p>
+        </div>
+      </section>
+
+      <section class="sec install" id="install">
+        <div class="sec-in two start">
+          <div class="col-text">
+            <h2 data-title>{t.inst.h}</h2>
+            <p class="sub rise">{t.inst.sub}</p>
+            <div class="cmd big rise"><code id="closeCmd">{BREW}</code><button class="copy" type="button" data-copy="#closeCmd" aria-label={t.copyLabel}>{t.copy}</button></div>
+            <a class="link rise" href={REPO}>{t.gh}</a>
+            <aside class="early rise" id="install-early" aria-labelledby="earlyH2">
+              <p class="early-h" id="earlyH2">{t.inst.earlyH}</p>
+              <p>{t.inst.earlyLead}</p>
+              <ul>{t.inst.unchecked.map((u) => <li>{u}</li>)}</ul>
+              <p>{t.inst.checked}</p>
+            </aside>
+          </div>
+          <div class="col-text">
+            <div class="facts-set rise">
+              <div><h3>{t.inst.notarH}</h3><p>{t.inst.notar}</p></div>
+              <div><h3>{t.inst.archH}</h3><p>{t.inst.arch}</p></div>
+              <div><h3>{t.inst.uiH}</h3><p>{t.inst.ui}</p></div>
+            </div>
+            <ol class="steps rise">
+              {t.inst.steps.map(([a, b], i) => <li><span class="n" aria-hidden="true">{i + 1}</span><div><h3>{a}</h3><p>{b}</p></div></li>)}
+            </ol>
+            <p class="dmg rise">{t.inst.dmg} <a href={`${REPO}/releases`}>{t.releases}</a></p>
+            <details class="source rise">
+              <summary>{t.inst.srcSum}</summary>
+              <p>{t.inst.srcNeeds}</p>
+              <div class="code-wrap"><pre class="code" id="srcCmd" tabindex="0">{t.inst.src}</pre><button class="copy" type="button" data-copy="#srcCmd" aria-label={t.copyLabel}>{t.copy}</button></div>
+              <p>{t.inst.srcAfter}</p>
+            </details>
+            <div class="limits rise">
+              <h3>{t.inst.limitsH}</h3>
+              <ul>{t.inst.limits.map((l) => <li>{l}</li>)}</ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="foot-in">
+        <div class="row">
+          <a class="brand" href="#top"><img src="/assets/icon.png" width="24" height="24" alt="" />Pantau</a>
+          <a href={REPO}>GitHub</a>
+          <a href={`${REPO}/blob/main/README.md`}>{t.readme}</a>
+          <a href={`${REPO}/releases`}>{t.releases}</a>
+          <a href={`${REPO}/blob/main/LICENSE`}>{t.license}</a>
+          <a href={`${REPO}/blob/main/SECURITY.md`}>{t.security}</a>
+          <a class="to-top" href="#top">{t.top}</a>
+        </div>
+        <p>{t.foot1}</p>
+        <p>{t.foot2}</p>
+      </div>
+    </footer>
+
+    <script>import "../scripts/app.js";</script>
+    <script>import "../scripts/motion.js";</script>
+  </body>
+</html>

@@ -27,3 +27,8 @@ node_modules/
 dist/
 src-tauri/target/
 .vitest/
+
+# Landing page (site/)
+site/dist/
+site/.astro/
+site/node_modules/
