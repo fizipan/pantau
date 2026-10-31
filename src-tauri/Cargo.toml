@@ -1,0 +1,45 @@
+[package]
+name = "pantau"
+version = "0.1.0"
+description = "macOS menu bar app that shows CPU, memory and disk load and cleans only what is safe to clean"
+authors = ["Hafizh"]
+license = "MIT"
+repository = "https://github.com/fizipan/pantau"
+edition = "2024"
+
+[lib]
+name = "pantau_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["tray-icon", "macos-private-api"] }
+serde = { version = "1", features = ["derive"] }
+sysinfo = { version = "0.37", default-features = false, features = ["system"] }
+libc = "0.2"
+serde_json = "1"
+base64 = "0.23"
+tauri-plugin-global-shortcut = "2"
+tauri-plugin-autostart = "2"
+tauri-plugin-dialog = "2"
+mac-notification-sys = "0.6"
+objc2 = "0.6"
+
+[dev-dependencies]
+tempfile = "3"
+
+[features]
+# Off by default. Drives the panel on a timer so the webview can be measured without clicking.
+measure = []
+# Off by default. Sends one real low-disk notification 5 s after launch, through the normal delivery path.
+notify-test = []
+# Off by default. Prints the largest gap between system samples once a minute, to check the 10 s alert limit.
+tick-log = []
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = 3
+strip = true

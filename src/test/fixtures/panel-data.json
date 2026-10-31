@@ -1,0 +1,146 @@
+{
+  "history": [
+    {
+      "at_ms": 1793000000000,
+      "cpu_pct": 20.0,
+      "core_count": 8,
+      "ram_used": 11811160064,
+      "ram_total": 17179869184,
+      "swap_used": 2147483648,
+      "swap_total": 4294967296,
+      "pressure": "warning",
+      "disk_used": 359703511040,
+      "disk_total": 493921239040,
+      "disk_free": 134217728000
+    },
+    {
+      "at_ms": 1793000002000,
+      "cpu_pct": 35.5,
+      "core_count": 8,
+      "ram_used": 11811160064,
+      "ram_total": 17179869184,
+      "swap_used": 2147483648,
+      "swap_total": 4294967296,
+      "pressure": "warning",
+      "disk_used": 359703511040,
+      "disk_total": 493921239040,
+      "disk_free": 134217728000
+    }
+  ],
+  "groups": [
+    {
+      "id": "agent:Claude Code:made-up-app",
+      "kind": "agent",
+      "name": "Claude Code",
+      "project": "made-up-app",
+      "bundle": null,
+      "footprint": 943718400,
+      "cpu_pct": 12.0,
+      "ports": [
+        3000
+      ],
+      "processes": [
+        {
+          "pid": 4101,
+          "start_time": 1793004101,
+          "label": "claude",
+          "footprint": 629145600,
+          "cpu_pct": 3.5,
+          "ports": [],
+          "killable": true
+        },
+        {
+          "pid": 4102,
+          "start_time": 1793004102,
+          "label": "node vite",
+          "footprint": 314572800,
+          "cpu_pct": 3.5,
+          "ports": [
+            3000
+          ],
+          "killable": true
+        }
+      ],
+      "session_count": 1
+    },
+    {
+      "id": "app:Made Up",
+      "kind": "app",
+      "name": "Made Up",
+      "project": null,
+      "bundle": "/Applications/Made Up.app",
+      "footprint": 0,
+      "cpu_pct": 0.0,
+      "ports": [],
+      "processes": [
+        {
+          "pid": 4201,
+          "start_time": 1793004201,
+          "label": "Made Up Helper",
+          "footprint": null,
+          "cpu_pct": 3.5,
+          "ports": [],
+          "killable": false
+        }
+      ],
+      "session_count": 0
+    }
+  ],
+  "leftovers": [
+    {
+      "pid": 4301,
+      "start_time": 1793000301,
+      "command": "vitest run",
+      "project": "made-up-app",
+      "age_secs": 5400,
+      "kind": "test",
+      "preselected": true,
+      "footprint": 220200960
+    }
+  ],
+  "operations": [
+    {
+      "op_id": "op-running",
+      "state": "Running",
+      "survivors": []
+    },
+    {
+      "op_id": "op-cleaned",
+      "state": {
+        "Done": {
+          "freed_bytes": 2147483648,
+          "skipped": 1
+        }
+      },
+      "survivors": []
+    },
+    {
+      "op_id": "op-killed",
+      "state": {
+        "Done": {
+          "freed_bytes": null,
+          "skipped": 0
+        }
+      },
+      "survivors": []
+    },
+    {
+      "op_id": "op-stuck",
+      "state": "StillAlive",
+      "survivors": [
+        {
+          "pid": 4401,
+          "start_time": 1793000401
+        }
+      ]
+    },
+    {
+      "op_id": "op-failed",
+      "state": {
+        "Failed": "1 dari 2 gagal: PID 9: izin ditolak. Sisanya sudah berhenti."
+      },
+      "survivors": []
+    }
+  ],
+  "cpu_pending": false
+}

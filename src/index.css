@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+/* Glass comes from the native window effect, so the page stays transparent with only a faint tint.
+   Tokens live here as variables and are mapped into Tailwind below, so utilities follow the theme. */
+:root {
+  color-scheme: light;
+  --ink: #1c1e24;
+  --muted: #373c48;
+  --subtle: #3a3f4b;
+  --hairline: rgba(28, 30, 36, 0.09);
+  --hover: rgba(28, 30, 36, 0.06);
+  --kill: #d6372c;
+  --cpu: #2f6fe0;
+  --ram: #d9861a;
+  --disk: #8b909b;
+  --focus: #2f6fe0;
+  --banner-ink: #6b3a00;
+  --banner-bg: rgba(217, 134, 26, 0.16);
+  --banner-bg-critical: rgba(217, 134, 26, 0.26);
+  --banner-dot: #d9861a;
+  --tint: rgba(255, 255, 255, 0.18);
+  /* Settings window: an ordinary opaque window with grouped rows. */
+  --window: #ececef;
+  --group: #ffffff;
+  --switch-off: rgba(28, 30, 36, 0.22);
+  --seg-track: rgba(28, 30, 36, 0.07);
+  --seg-on: rgba(255, 255, 255, 0.92);
+  --seg-shadow: 0 1px 2px rgba(28, 30, 36, 0.16), 0 0 0 0.5px rgba(28, 30, 36, 0.06);
+}
+:root.dark {
+  color-scheme: dark;
+  --ink: #f2f3f6;
+  --muted: #bcc0ca;
+  --subtle: #a6abb6;
+  --hairline: rgba(255, 255, 255, 0.1);
+  --hover: rgba(255, 255, 255, 0.08);
+  --kill: #c43a2a;
+  --cpu: #7fb0ff;
+  --ram: #f0b24a;
+  --disk: #9aa0ac;
+  --focus: #7fb0ff;
+  --banner-ink: #f5bd62;
+  --banner-bg: rgba(240, 178, 74, 0.14);
+  --banner-bg-critical: rgba(240, 178, 74, 0.26);
+  --banner-dot: #f0b24a;
+  --tint: rgba(28, 30, 38, 0.18);
+  --window: #232428;
+  --group: #303136;
+  --switch-off: rgba(255, 255, 255, 0.2);
+  --seg-track: rgba(255, 255, 255, 0.08);
+  --seg-on: rgba(255, 255, 255, 0.2);
+  --seg-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --tint: #ececf0;
+  }
+  :root.dark {
+    --tint: #26282f;
+  }
+}
+
+@theme inline {
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-hairline: var(--hairline);
+  --color-hover: var(--hover);
+  --color-kill: var(--kill);
+  --color-cpu: var(--cpu);
+  --color-ram: var(--ram);
+  --color-disk: var(--disk);
+  --color-banner-ink: var(--banner-ink);
+  --color-banner: var(--banner-bg);
+  --color-banner-critical: var(--banner-bg-critical);
+  --color-banner-dot: var(--banner-dot);
+  --color-tint: var(--tint);
+  --color-window: var(--window);
+  --color-group: var(--group);
+  --color-switch-off: var(--switch-off);
+  --color-seg-track: var(--seg-track);
+  --color-seg-on: var(--seg-on);
+  --shadow-seg: var(--seg-shadow);
+}
+
+@layer base {
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    background: transparent;
+    overflow: hidden;
+  }
+  body {
+    font-size: 13px;
+    line-height: 1.35;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+    -webkit-font-smoothing: antialiased;
+    user-select: none;
+  }
+  #root {
+    height: 100%;
+  }
+  ::selection {
+    background: color-mix(in srgb, var(--cpu) 30%, transparent);
+  }
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--hairline) transparent;
+  }
+}

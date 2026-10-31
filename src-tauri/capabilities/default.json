@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Commands for the panel and the settings window",
+  "windows": ["panel", "settings"],
+  "permissions": ["core:event:allow-listen", "core:event:allow-unlisten"]
+}

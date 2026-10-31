@@ -1,0 +1,85 @@
+{
+  "items": [
+    {
+      "id": "next-1",
+      "title": "Item next-1",
+      "sub": "Contoh",
+      "path": "/Users/example/Documents/made-up-app/.next",
+      "category": "safe",
+      "cleaner": "removeDir",
+      "upperBound": false,
+      "bytes": 1181116006,
+      "measuredAtMs": 1793000000000,
+      "state": "ready"
+    },
+    {
+      "id": "pnpm",
+      "title": "Item pnpm",
+      "sub": "Contoh",
+      "path": "/Users/example/Library/pnpm/store",
+      "category": "safe",
+      "cleaner": "pnpmPrune",
+      "upperBound": true,
+      "bytes": 4294967296,
+      "measuredAtMs": 1793000000000,
+      "state": "ready"
+    },
+    {
+      "id": "claude-history",
+      "title": "Item claude-history",
+      "sub": "Contoh",
+      "path": "/Users/example/.claude/projects",
+      "category": "check",
+      "cleaner": "none",
+      "upperBound": false,
+      "bytes": null,
+      "measuredAtMs": null,
+      "state": "denied"
+    },
+    {
+      "id": "temp",
+      "title": "Item temp",
+      "sub": "Contoh",
+      "path": "/var/folders/xx/made-up/T",
+      "category": "safe",
+      "cleaner": "oldTemp",
+      "upperBound": false,
+      "bytes": null,
+      "measuredAtMs": null,
+      "state": "pending"
+    },
+    {
+      "id": "next-2",
+      "title": "Item next-2",
+      "sub": "Contoh",
+      "path": "/Users/example/Documents/busy-app/.next",
+      "category": "safe",
+      "cleaner": "removeDir",
+      "upperBound": false,
+      "bytes": 314572800,
+      "measuredAtMs": 1793000000000,
+      "state": {
+        "refused": "Masih ada proses yang berjalan di project ini"
+      }
+    }
+  ],
+  "recent": [
+    {
+      "path": "/Users/example/Downloads/made-up-video.mov",
+      "bytes": 3221225472,
+      "changedAtSecs": 1792900000,
+      "ownerGuess": "Downloads"
+    }
+  ],
+  "recentAtMs": 1793000000000,
+  "recentSkippedDirs": 2,
+  "recentDenied": false,
+  "deniedRoots": [
+    "/Users/example/Documents"
+  ],
+  "paused": false,
+  "measuring": true,
+  "scanning": false,
+  "measuringAuto": true,
+  "scanningAuto": false
+}
