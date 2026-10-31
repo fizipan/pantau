@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="https://pantau-app.vercel.app"><img alt="Situs" src="https://img.shields.io/badge/situs-pantau--app.vercel.app-black"></a>
+  <a href="https://pantau-app-swart.vercel.app"><img alt="Situs" src="https://img.shields.io/badge/situs-pantau--app--swart.vercel.app-black"></a>
   <a href="https://github.com/fizipan/pantau/releases/latest"><img alt="Rilis terbaru" src="https://img.shields.io/github/v/release/fizipan/pantau"></a>
   <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-blue"></a>
   <img alt="macOS, Apple Silicon" src="https://img.shields.io/badge/macOS-Apple%20Silicon-lightgrey">
