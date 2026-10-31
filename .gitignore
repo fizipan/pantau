@@ -32,3 +32,5 @@ src-tauri/target/
 site/dist/
 site/.astro/
 site/node_modules/
+.vercel
+.env*
